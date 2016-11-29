@@ -1,0 +1,31 @@
+#login to cassanda using cqlsh 
+cqlsh 
+
+#create  keyspace
+
+CREATE KEYSPACE opsschool WITH REPLICATION  =  \ 
+{'class' : 'SimpleStrategy', 'replication_factor': 1};
+
+#create table
+USE opsschool;
+
+CREATE TABLE user ( username TEXT PRIMARY KEY,
+                    userid TIMEUUID, 
+                                        phonenumber BIGINT);
+
+# insert data
+INSERT INTO User (username,phonenumber,userid) VALUES ('user1', 1111,now() );
+INSERT INTO User (username,phonenumber,userid) VALUES ('user2', 2222,now() );
+INSERT INTO User (username,phonenumber,userid) VALUES ('user4', 4444,now() );
+INSERT INTO User (username,phonenumber,userid) VALUES ('user4', 5555,now() );
+
+select * From user;
+
+# insert same data
+INSERT INTO User (username,phonenumber ,userid ) VALUES ('user4', 4444,now() );
+INSERT INTO User (username,phonenumber ,userid ) VALUES ('user4', 5555,now() );
+
+select * From user where username='user4';
+
+
+

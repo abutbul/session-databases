@@ -1,0 +1,25 @@
+knife role edit cassandra  -evi
+
+{
+  "name": "cassandra",
+  "description": "Installs cassandra",
+  "json_class": "Chef::Role",
+  "default_attributes": {
+    "cassandra": {
+      "root_dir": "/mnt/disks/cassandra",
+      "config": {
+        "cluster_name": "ops_school"
+      }
+    }
+  },
+  "override_attributes": {
+
+  },
+  "chef_type": "role",
+  "run_list": [
+    "recipe[cassandra-dse::default]"
+  ],
+  "env_run_lists": {
+
+  }
+}

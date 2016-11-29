@@ -1,0 +1,30 @@
+# creat disks in GCP for you nodes using gcloud
+
+gcloud compute disks create cass01data --size 20Gib --type pd-standard
+
+#create one node with cassandra role 
+./manage_vms.sh create -n cass01 -p ${MY_OPSSCHOOL_GCP_PROJECT} -r cassandra
+e
+#attach the disk you created to the node
+gcloud compute instances attach-disk  cass01  --disk  cass01data --device-name=cassandra-data
+
+#create directory and mount the new created disk
+
+./manage_vms.sh ssh -n cass01  -p ${MY_OPSSCHOOL_GCP_PROJECT}
+
+sudo -i
+
+#create file system
+mkfs.ext4 -F -E lazy_itable_init=0,lazy_journal_init=0,discard /dev/disk/by-id/google-cassandra-data
+
+#create mount directory
+mkdir -p /mnt/disks/cassandra
+
+#add device to fstab
+echo UUID=`blkid -s UUID -o value /dev/disk/by-id/google-cassandra-data` /mnt/disks/cassandra ext4 discard,defaults 0 2 | tee -a /etc/fstab
+
+#mount the device
+mount -a 
+
+#clear log directory
+\rm /var/log/cassandra/*
