@@ -1,6 +1,10 @@
+
+
+
+
 # creat disks in GCP for you nodes using gcloud
 
-gcloud compute disks create cass01data --size 20Gib --type pd-standard
+gcloud compute disks create cass01data --size 20Gib --type pd-standard --zone europe-west1-b
 
 #create one node with cassandra role 
 ./manage_vms.sh create -n cass01 -p ${MY_OPSSCHOOL_GCP_PROJECT} -r cassandra
