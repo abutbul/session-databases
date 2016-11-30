@@ -4,8 +4,8 @@ gcloud compute disks create cass02data --size 20Gib --type pd-standard
 gcloud compute disks create cass03data --size 20Gib --type pd-standard
 
 #create node 2 and 3  with cassandra role
-./manage_vms.sh create -n cass02 -p ${MY_OPSSCHOOL_GCP_PROJECT} -r cassandra
-./manage_vms.sh create -n cass03 -p ${MY_OPSSCHOOL_GCP_PROJECT} -r cassandra
+./manage_vms.sh create -n cass02 -p ${MY_OPSSCHOOL_GCP_PROJECT} -r chefclient
+./manage_vms.sh create -n cass03 -p ${MY_OPSSCHOOL_GCP_PROJECT} -r chefclient
 
 #attach the disks you created to the nodes
 gcloud compute instances attach-disk  cass02  --disk  cass02data --device-name=cassandra-data
@@ -30,3 +30,4 @@ mount -a
 clear log directory
 \rm /var/log/cassandra/*
 
+chef-client -r "role[cassandra]"
